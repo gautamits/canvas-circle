@@ -1,4 +1,5 @@
 import React, {useRef, useState, useEffect} from 'react';
+import {getArcDataFromStartEnd, getDistance, getMousePosition, getFillRectDataFromStartEnd, RectCircleColliding} from './helpers'
 import './App.scss';
 
 interface Coordinate{
@@ -10,80 +11,6 @@ interface Structure{
   type: 'square' | 'circle';
   initial: Coordinate;
   final: Coordinate;
-}
-
-function getDistance( x1: number, y1: number, x2: number, y2: number ) {
-	
-	let 	xs = x2 - x1, ys = y2 - y1;		
-	xs *= xs;
-	ys *= ys;
-	return Math.sqrt( xs + ys );
-};
-
-function getFillRectDataFromStartEnd(startX: number, startY: number, endX: number, endY: number):[number, number, number, number]{
-  return [Math.min(startX, endX), Math.min(startY, endY), Math.abs(endX-startX), Math.abs(endY-startY)]
-}
-
-function getArcDataFromStartEnd(
-  startX: number,
-  startY: number,
-  endX: number,
-  endY: number
-): [number, number, number, number, number, boolean] {
-  const originX = Math.abs(endX+startX) / 2
-  const originY = Math.abs(endY+startY) / 2
-  const radius = getDistance(startX, startY, endX, endY) / 2
-  return [
-    originX,	
-    originY,
-    radius,
-    0,
-    2 * Math.PI,
-    false
-  ];
-}
-function getMousePosition(canvas:HTMLCanvasElement, evt: React.MouseEvent<HTMLCanvasElement, MouseEvent>){
-  const rect = canvas.getBoundingClientRect()
-  return {
-    x: ((evt.clientX - rect.left) / (rect.right - rect.left)) * canvas.width,
-    y: ((evt.clientY - rect.top) / (rect.bottom - rect.top)) * canvas.height,
-  };
-}
-
-interface Circle{
-  x: number;
-  y: number;
-  r: number;
-}
-
-interface Rectangle{
-  x: number;
-  y: number;
-  w: number;
-  h: number;
-}
-
-function RectCircleColliding(circle:Circle, rect: Rectangle) {
-  var distX = Math.abs(circle.x - rect.x - rect.w / 2);
-  var distY = Math.abs(circle.y - rect.y - rect.h / 2);
-
-  if (distX > rect.w / 2 + circle.r) {
-    return false;
-  }
-  if (distY > rect.h / 2 + circle.r) {
-    return false;
-  }
-
-  if (distX <= rect.w / 2) {
-    return true;
-  }
-  if (distY <= rect.h / 2) {
-    return true;
-  }
-
-  var dx = distX - rect.w / 2;
-  var dy = distY - rect.h / 2;
-  return dx * dx + dy * dy <= circle.r * circle.r;
 }
 
 function App() {
@@ -137,8 +64,10 @@ function App() {
       canvasRef.current.width,
       canvasRef.current.height
     );
+    ctx.current.save()
     structures.forEach(structure=>drawStructure(structure))
-    ctx.current.stroke()
+    ctx.current.stroke();
+    ctx.current.restore()
   }
 
   useEffect(()=>{
@@ -158,7 +87,9 @@ function App() {
     isMouseDown.current = false
     if(!canvasRef.current) return
     const {x, y} = getMousePosition(canvasRef.current, e)
-    if(initialPosition.current.x === x && initialPosition.current.y === y) return
+    if(initialPosition.current.x === x && initialPosition.current.y === y){
+     return
+    }
     setStructures((structures) => [
       ...structures,
       {
@@ -209,10 +140,17 @@ function App() {
     if(!ctx.current) return
     if(!canvasRef.current) return
     const { x, y } = getMousePosition(canvasRef.current, e);
-    ctx.current.clearRect(0 , 0, canvasRef.current.width, canvasRef.current.height)
+    ctx.current.save()
+    ctx.current.clearRect(
+      0,
+      0,
+      canvasRef.current.width,
+      canvasRef.current.height
+    );
     plotStructures()
     drawStructure({type: structureType, initial: initialPosition.current, final: {x, y}})
     ctx.current.stroke();
+    ctx.current.restore()
   }
 
   function reset(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
