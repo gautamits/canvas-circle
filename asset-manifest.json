@@ -1,0 +1,22 @@
+{
+  "files": {
+    "main.css": "/canvas-circle/static/css/main.114b649d.chunk.css",
+    "main.js": "/canvas-circle/static/js/main.4fad6dd1.chunk.js",
+    "main.js.map": "/canvas-circle/static/js/main.4fad6dd1.chunk.js.map",
+    "runtime-main.js": "/canvas-circle/static/js/runtime-main.c6a3fad7.js",
+    "runtime-main.js.map": "/canvas-circle/static/js/runtime-main.c6a3fad7.js.map",
+    "static/js/2.f4448de4.chunk.js": "/canvas-circle/static/js/2.f4448de4.chunk.js",
+    "static/js/2.f4448de4.chunk.js.map": "/canvas-circle/static/js/2.f4448de4.chunk.js.map",
+    "index.html": "/canvas-circle/index.html",
+    "precache-manifest.45341d66b7b9e89c58ae09e1c865583b.js": "/canvas-circle/precache-manifest.45341d66b7b9e89c58ae09e1c865583b.js",
+    "service-worker.js": "/canvas-circle/service-worker.js",
+    "static/css/main.114b649d.chunk.css.map": "/canvas-circle/static/css/main.114b649d.chunk.css.map",
+    "static/js/2.f4448de4.chunk.js.LICENSE.txt": "/canvas-circle/static/js/2.f4448de4.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.c6a3fad7.js",
+    "static/js/2.f4448de4.chunk.js",
+    "static/css/main.114b649d.chunk.css",
+    "static/js/main.4fad6dd1.chunk.js"
+  ]
+}
