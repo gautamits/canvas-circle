@@ -1,0 +1,36 @@
+.App {
+  text-align: center;
+  display: grid;
+  height: 100vh;
+  width: 100vw;
+  grid-template-rows: 80px 1fr;
+}
+
+.App-header {
+  display: flex;
+  padding: 0 16px;
+  align-items: center;
+  justify-content: flex-start;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+#main{
+  height: 100%;
+  width: 100%;
+}
+
+.structure{
+  height: 30px;
+  width: 30px;
+  margin-right: 12px;
+  border: 1px solid red;
+}
+
+.structure.circle{
+  border-radius: 50%;
+}
+
+.structure.active{
+  background-color: green;
+}
