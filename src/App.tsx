@@ -210,10 +210,21 @@ function App() {
     if(!canvasRef.current) return
     const { x, y } = getMousePosition(canvasRef.current, e);
     ctx.current.clearRect(0 , 0, canvasRef.current.width, canvasRef.current.height)
-    // ctx.current.stroke();
     plotStructures()
     drawStructure({type: structureType, initial: initialPosition.current, final: {x, y}})
     ctx.current.stroke();
+  }
+
+  function reset(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
+    if (!ctx.current) return;
+    if (!canvasRef.current) return;
+    setStructures([])
+    ctx.current.clearRect(
+      0,
+      0,
+      canvasRef.current.width,
+      canvasRef.current.height
+    );
   }
 
   return (
@@ -240,6 +251,7 @@ function App() {
           }
         />
         <button type="button" onClick={tile}>Tile</button>
+        <button onClick={reset}>Clear</button>
       </header>
       <main id="main">
         <canvas
